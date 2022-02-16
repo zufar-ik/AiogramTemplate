@@ -1,0 +1,94 @@
+model=Модель смартфона
+
+date=Дата выхода смартфона
+
+size=Размеры (ВxШxГ)
+
+weight=Вес
+
+frame=Корпус
+
+color=Цвета
+
+battery=Аккумулятор
+
+price=Ориентировочная цена
+
+tech=Технологии
+
+touch =Сенсорный экран
+
+colour =Глубина цвета
+
+sized =Размер (Диагональ)
+
+square=Площь экрана
+
+hw=Соотношение (высота:ширина)
+
+sc =Соотношение (экран:корпус)
+
+sr =Разрешение
+
+PPI =Точек на дюйм
+
+sp =Защита экрана
+
+other =Другое
+
+camback =Камера заднего, основная
+
+backab =Характеристики камеры
+
+backf =Функции
+
+backrec =Запись видео
+
+frontcam =Фронтальная камера, селфи
+
+frontab =Характеристика
+
+frontf =Функции
+
+frontrec=Запись видео
+
+OS=Операционная система (OS)
+
+chip =Чипсет
+
+cpu =Центральный процессор (CPU)
+
+gpu =Графический процессор (GPU)
+
+sdcard =Внешняя карта памяти
+
+RAM=Внутренняя память
+
+Antutu9 =Результат Antutu 9
+
+Antutu8 =Результат Antutu 8
+
+Geek5s =Результат GeekBench 5 Single Core
+
+Geek5m=Результат GeekBench 5 Multi-Core
+
+sim=Слоты
+
+net =Сеть
+
+speed =Скорость интернета
+
+gprs =GPRS
+
+edge =Edge
+
+wifi=Wi-Fi
+
+gps=GPS
+
+nfc=NFC
+
+usb=USB
+
+bluet=Bluetooth
+

@@ -1,35 +1,17 @@
 from aiogram.dispatcher.filters.state import State, StatesGroup
 
 
-class Anketa(StatesGroup):
-    ism = State()
-    familiya = State()
-    phone = State()
-    texnologia = State()
-    region = State()
-    price = State()
-    prof = State()
-    timew = State()
-    purpose = State()
+class Redmib(StatesGroup):
+    back = State()
 
-class Pomosh(StatesGroup):
-    ism = State()
-    familiya = State()
-    phone = State()
-    texnologia = State()
-    region = State()
-    price = State()
-    prof = State()
-    timew = State()
-    purpose = State()
+class Xiaomi(StatesGroup):
+    back = State()
 
-class Xodim(StatesGroup):
-    idora = State()
-    phone = State()
-    texnologia = State()
-    region = State()
-    price = State()
-    prof = State()
-    timew = State()
-    timework = State()
-    purpose = State()
+class MI(StatesGroup):
+    back = State()
+
+class POCO(StatesGroup):
+    back = State()
+
+class MI_MIX(StatesGroup):
+    back = State()
