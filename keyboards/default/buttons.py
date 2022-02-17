@@ -11,7 +11,7 @@ tel = ReplyKeyboardMarkup(
     keyboard=[
         [KeyboardButton(text="Apple"), KeyboardButton(text='Samsung')],
         [KeyboardButton(text="Xiaomi"), KeyboardButton(text='VIVO')],
-        [KeyboardButton(text="Главное меню")]
+        [KeyboardButton(text="Назад"),KeyboardButton(text="Главное меню")]
     ],
     resize_keyboard=True
 )
@@ -20,7 +20,7 @@ xiaomi = ReplyKeyboardMarkup(
     keyboard=[
         [KeyboardButton(text="Redmi"), KeyboardButton(text='POCO')],
         [KeyboardButton(text="MI"), KeyboardButton(text="MI MIX")],
-        [KeyboardButton(text="Главное меню")]
+        [KeyboardButton(text="Назад"),KeyboardButton(text="Главное меню")]
     ],
     resize_keyboard=True
 )

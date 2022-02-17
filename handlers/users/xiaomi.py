@@ -3,54 +3,99 @@ from aiogram.dispatcher import FSMContext
 
 from keyboards.default.buttons import tel, xiaomi, Redmi, menuAll
 from keyboards.default.model_redmi import redminot9, redminot10, redminot11, redminot12, modelList
-from loader import dp
 from keyboards.default.model_redmi import sheet
+from loader import dp
+from states.state import Phone
+
+
 @dp.message_handler(text="Телефоны")
-async def go(message:types.Message):
-    await message.answer("Выберите Марку Смартфонов",reply_markup=tel)
+async def go(message: types.Message):
+    await message.answer("Выберите Марку Смартфонов", reply_markup=tel)
+    await Phone.category.set()
 
-@dp.message_handler(text='Xiaomi')
-async def key(message: types.Message):
+
+@dp.message_handler(text='Xiaomi', state=Phone.category)
+async def key(message: types.Message, state: FSMContext):
     await message.answer("Выберите линейку смартфонов", reply_markup=xiaomi)
+    await Phone.subcategory.set()
 
 
-@dp.message_handler(text='Redmi')
-async def key(message: types.Message):
+@dp.message_handler(text='Apple', state=Phone.category)
+async def key(message: types.Message, state: FSMContext):
+    await message.answer("Выберите линейку смартфонов")
+    await Phone.subcategory.set()
+
+
+
+
+@dp.message_handler(text='VIVO', state=Phone.category)
+async def key(message: types.Message, state: FSMContext):
+    await message.answer("Выберите линейку смартфонов")
+    await Phone.subcategory.set()
+
+
+@dp.message_handler(text='Samsung', state=Phone.category)
+async def key(message: types.Message, state: FSMContext):
+    await message.answer("Выберите линейку смартфонов")
+    await Phone.subcategory.set()
+
+@dp.message_handler(text="Назад", state=Phone.category)
+async def back1(message: types.Message, state: FSMContext):
+    await message.answer("Вы нажали назад", reply_markup=menuAll)
+    await state.finish()
+
+@dp.message_handler(text="Назад", state=Phone.subcategory)
+async def back1(message: types.Message, state: FSMContext):
+    await message.answer("Вы нажали назад", reply_markup=tel)
+    await Phone.category.set()
+
+
+@dp.message_handler(text="Назад", state=Phone.product)
+async def back1(message: types.Message, state: FSMContext):
+    await message.answer("Вы нажали назад", reply_markup=xiaomi)
+    await Phone.subcategory.set()
+
+
+@dp.message_handler(text="Назад", state=Phone.subproduct)
+async def back1(message: types.Message, state: FSMContext):
+    await message.answer("Вы нажали назад", reply_markup=Redmi)
+    await Phone.product.set()
+
+
+@dp.message_handler(text='Redmi', state=Phone.subcategory)
+async def key(message: types.Message, state: FSMContext):
     await message.answer("Выберите серию смартфона Redmi", reply_markup=Redmi)
+    await Phone.product.set()
 
 
-@dp.message_handler(text='Redmi Note 9/S/Pro')
+@dp.message_handler(text='Redmi Note 9/S/Pro', state=Phone.product)
 async def key(message: types.Message):
     await message.answer("Выберите модель смартфона Redmi", reply_markup=redminot9)
+    await Phone.subproduct.set()
 
 
-@dp.message_handler(text='Redmi Note 10/S/Pro')
+@dp.message_handler(text='Redmi Note 10/S/Pro', state=Phone.product)
 async def key(message: types.Message):
     await message.answer("Выберите модель смартфона Redmi", reply_markup=redminot10)
-
-
-@dp.message_handler(text="Назад")
-async def back(message: types.Message, state: FSMContext):
-    await message.answer("Вы нажали назад", reply_markup=Redmi)
-
+    await Phone.subproduct.set()
 
 @dp.message_handler(text='Главное меню')
 async def mainmenu(message: types.Message):
     await message.answer("Вы нажали Главное меню", reply_markup=menuAll)
 
 
-@dp.message_handler(text='Redmi Note 11/S/Pro')
+@dp.message_handler(text='Redmi Note 11/S/Pro',state=Phone.product)
 async def key(message: types.Message):
     await message.answer("Выберите модель смартфона Redmi", reply_markup=redminot11)
+    await Phone.subproduct.set()
 
-
-@dp.message_handler(text='Redmi Note 12/S/Pro')
+@dp.message_handler(text='Redmi Note 12/S/Pro',state=Phone.product)
 async def key(message: types.Message):
     await message.answer("Выберите модель смартфона Redmi", reply_markup=redminot12)
+    await Phone.subproduct.set()
 
-
-@dp.message_handler(text=modelList)
-async def model_answer(message: types.Message):
+@dp.message_handler(text=modelList, state=Phone.subproduct)
+async def model_answer(message: types.Message, state: FSMContext):
     for i in modelList:
         if message.text == i:
             n = modelList.index(i)
@@ -108,3 +153,4 @@ async def model_answer(message: types.Message):
                                      f'•NFC: \n{nfc.value}\n'
                                      f'•USB: \n{usb.value}\n'
                                      f'•Bluetooth: \n{bluet.value}\n')
+    await Phone.subproduct.set()
