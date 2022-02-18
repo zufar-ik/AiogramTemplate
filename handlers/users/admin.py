@@ -25,7 +25,7 @@ async def send_ad_to_all(message: types.Message):
     users = db.select_all_users()
     for user in users:
         user_id = user[0]
-        await bot.send_message(chat_id=user_id, text="@gif_wow подписывайтесь и подрочите!")
+        await bot.send_message(chat_id=user_id, text="@BekoDev подписываемся")
         await asyncio.sleep(0.05)
 
 @dp.message_handler(text="/cleandb", user_id=ADMINS)

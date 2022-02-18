@@ -1,37 +1,34 @@
 import openpyxl
 from aiogram.types import KeyboardButton, ReplyKeyboardMarkup
 listAll = openpyxl.open("D:\\CODE\\AiogramTemplate\\excel\\xiaomi_redmi.xlsx", read_only=True)
-sheet = listAll.active
-#В dict записывется названия моделей из БД
-modelList = ['space','space']
-for i in range(3,sheet.max_row):
-    model = sheet[i][1]
-    modelList.append(model.value)
+sheetX = listAll.active
+sheets_1 = listAll.worksheets[0]
+for i in range(3,sheets_1.max_row):
+    model = sheets_1[i][0]
+    print(model.value)
+# В dict записывется названия моделей из БД
+modelListX = ['space','space']
+for i in range(3,sheets_1.max_row):
+    modelxia = sheets_1[i][0]
+    modelListX.append(modelxia.value)
 #Для кнопок в боте с названиеями моделей
 redminot9 = ReplyKeyboardMarkup(resize_keyboard=True)
 for i in range(3, 6):
-    name = sheet[i][1]
+    name = sheets_1[i][0]
     redminot9.insert(KeyboardButton(text=(name.value)))
 redminot9.insert(KeyboardButton(text="Назад"))
 redminot9.insert(KeyboardButton(text="Главное меню"))
 
-redminot10 = ReplyKeyboardMarkup(resize_keyboard=True)
-for i in range(6, 9):
-    name = sheet[i][1]
-    redminot10.insert(KeyboardButton(text=(name.value)))
-redminot10.insert(KeyboardButton(text="Назад"))
-redminot10.insert(KeyboardButton(text="Главное меню"))
+redmi_a = ReplyKeyboardMarkup(resize_keyboard=True)
+for i in range(6,8):
+    name = sheets_1[i][0]
+    redmi_a.insert(KeyboardButton(text=(name.value)))
+redmi_a.insert(KeyboardButton(text="Назад"))
+redmi_a.insert(KeyboardButton(text="Главное меню"))
 
-redminot11 = ReplyKeyboardMarkup(resize_keyboard=True)
-for i in range(9, 12):
-    name = sheet[i][1]
-    redminot11.insert(KeyboardButton(text=(name.value)))
-redminot11.insert(KeyboardButton(text="Назад"))
-redminot11.insert(KeyboardButton(text="Главное меню"))
-
-redminot12 = ReplyKeyboardMarkup(resize_keyboard=True)
-for i in range(12, 15):
-    name = sheet[i][1]
-    redminot12.insert(KeyboardButton(text=(name.value)))
-redminot12.insert(KeyboardButton(text="Назад"))
-redminot12.insert(KeyboardButton(text="Главное меню"))
+redmi_k = ReplyKeyboardMarkup(resize_keyboard=True)
+for i in range(8,11):
+    name = sheets_1[i][0]
+    redmi_k.insert(KeyboardButton(text=(name.value)))
+redmi_k.insert(KeyboardButton(text="Назад"))
+redmi_k.insert(KeyboardButton(text="Главное меню"))

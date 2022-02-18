@@ -1,12 +1,10 @@
 import sqlite3
 
 from aiogram import types
-from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters.builtin import CommandStart
 
 from data.config import ADMINS
-from keyboards.default.buttons import tel, xiaomi, Redmi, menuAll
-from keyboards.default.model_redmi import redminot9, redminot10, redminot11, redminot12, modelList, sheet
+from keyboards.default.buttons import menuAll
 from loader import db, bot
 from loader import dp
 
@@ -27,5 +25,3 @@ async def bot_start(message: types.Message):
     except sqlite3.IntegrityError as err:
         await bot.send_message(chat_id=ADMINS[0], text=f"{name} в базе имелся раньше")
         await message.answer(f"Добро пожаловать! {name}, выберите марку смартфона", reply_markup=menuAll)
-
-

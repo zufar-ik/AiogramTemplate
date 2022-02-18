@@ -6,3 +6,9 @@ class Phone(StatesGroup):
     subcategory = State()
     product = State()
     subproduct = State()
+
+
+class Pixel(StatesGroup):
+    subcategory = State()
+    product = State()
+    subproduct = State()

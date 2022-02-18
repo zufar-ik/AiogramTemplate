@@ -10,7 +10,7 @@ menuAll = ReplyKeyboardMarkup(
 tel = ReplyKeyboardMarkup(
     keyboard=[
         [KeyboardButton(text="Apple"), KeyboardButton(text='Samsung')],
-        [KeyboardButton(text="Xiaomi"), KeyboardButton(text='VIVO')],
+        [KeyboardButton(text="Xiaomi"), KeyboardButton(text='Google')],
         [KeyboardButton(text="Назад"),KeyboardButton(text="Главное меню")]
     ],
     resize_keyboard=True
@@ -29,6 +29,7 @@ Redmi = ReplyKeyboardMarkup(
     keyboard=[
         [KeyboardButton(text="Redmi Note 9/S/Pro"), KeyboardButton(text="Redmi Note 10/S/Pro")],
         [KeyboardButton(text="Redmi Note 11/S/Pro"), KeyboardButton(text="Redmi Note 12/S/Pro")],
+        [KeyboardButton(text="Redmi/Redmi A"),KeyboardButton(text="Redmi K")],
         [KeyboardButton(text="Назад"), KeyboardButton(text="Главное меню")]
     ],
     resize_keyboard=True,
