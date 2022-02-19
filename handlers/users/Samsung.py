@@ -183,19 +183,3 @@ async def back1(message: types.Message, state: FSMContext):
     await message.answer("Вы нажали назад", reply_markup=menuAll)
     await state.finish()
 
-# @dp.message_handler(text="Назад", state=Samsung.subcategory)
-# async def back1(message: types.Message):
-#     await message.answer("Вы нажали назад", reply_markup=tel)
-#     await Phone.category.set()
-#
-#
-# @dp.message_handler(text="Назад", state=Samsung.subproduct)
-# async def back1(message: types.Message):
-#     await message.answer("Вы нажали назад", reply_markup=galaxymod)
-#     await Samsung.product.set()
-#
-#
-# @dp.message_handler(text="Назад", state=Samsung.product)
-# async def back1(message: types.Message):
-#     await message.answer("Вы нажали назад", reply_markup=galaxyModelS or galaxyModelA or galaxyModelN or galaxyModelZ)
-#     await Samsung.subcategory.set()

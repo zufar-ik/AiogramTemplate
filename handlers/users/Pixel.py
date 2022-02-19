@@ -1,10 +1,10 @@
 from aiogram import types
 from aiogram.dispatcher import FSMContext
-from keyboards.default.buttons import menuAll,tel
-from keyboards.default.pixel import sheetP
-from keyboards.default.pixel import pixel4, pixel5, pixel6, pixelModel, modelListPixel, pixelmod, sheetP
+
+from keyboards.default.buttons import menuAll, tel
+from keyboards.default.pixel import pixel4, pixel5, pixel6, pixelModel, modelListPixel, pixelmod, sheetP, sheets_2
 from loader import dp
-from states.state import Phone,Pixel
+from states.state import Phone, Pixel
 
 
 @dp.message_handler(text='Google', state=Phone.category)
@@ -12,25 +12,30 @@ async def key(message: types.Message, state: FSMContext):
     await message.answer("Выберите линейку смартфонов", reply_markup=pixelmod)
     await Pixel.subcategory.set()
 
+
 @dp.message_handler(text="Pixel", state=Pixel.subcategory)
 async def key(message: types.Message, state: FSMContext):
     await message.answer("Выберите линейку смартфонов", reply_markup=pixelModel)
     await Pixel.product.set()
+
 
 @dp.message_handler(text="Google Pixel 4/XL/a", state=Pixel.product)
 async def key(message: types.Message, state: FSMContext):
     await message.answer("Выберите серию смартфона Pixel", reply_markup=pixel4)
     await Pixel.subproduct.set()
 
+
 @dp.message_handler(text="Google Pixel 5/a", state=Pixel.product)
 async def key(message: types.Message, state: FSMContext):
     await message.answer("Выберите серию смартфона Pixel", reply_markup=pixel5)
     await Pixel.subproduct.set()
 
+
 @dp.message_handler(text="Google Pixel 6/Pro", state=Pixel.product)
 async def key(message: types.Message, state: FSMContext):
     await message.answer("Выберите серию смартфона Pixel", reply_markup=pixel6)
     await Pixel.subproduct.set()
+
 
 @dp.message_handler(text=modelListPixel, state=Pixel.subproduct)
 async def model_answer(message: types.Message, state: FSMContext):
@@ -38,8 +43,9 @@ async def model_answer(message: types.Message, state: FSMContext):
         if message.text == i:
             n = modelListPixel.index(i)
             n += 1
-            answersheet = (sheetP[f"C{n}:AV{n}"])
-            for date, size, weight, frame, color, battery, price, tech, touch, colour, sized, square, hw, sc, sr, PPI, sp, other, camback, backab, backf, backrec, frontcam, frontab, frontf, frontrec, OS, chip, cpu, gpu, sdcard, RAM, Antutu9, Antutu8, Geek5s, Geek5m, sim, net, speed, gprs, edge, wifi, gps, nfc, usb, bluet in answersheet:
+            answersheet = (sheets_2[f"B{n}:AV{n}"])
+            for photo, date, size, weight, frame, color, battery, price, tech, touch, colour, sized, square, hw, sc, sr, PPI, sp, other, camback, backab, backf, backrec, frontcam, frontab, frontf, frontrec, OS, chip, cpu, gpu, sdcard, RAM, Antutu9, Antutu8, Geek5s, Geek5m, sim, net, speed, gprs, edge, wifi, gps, nfc, usb, bluet in answersheet:
+                await message.answer_photo(photo=photo.value)
                 await message.answer(f'<b>•Общие Характеристики</b>•\n\n'
                                      f'•Дата выхода: {date.value}\n'
                                      f'•Размеры (ВxШxГ): {size.value}\n'
@@ -92,20 +98,25 @@ async def model_answer(message: types.Message, state: FSMContext):
                                      f'•USB: {usb.value}\n'
                                      f'•Bluetooth: {bluet.value}\n')
     await Pixel.subproduct.set()
+
+
 @dp.message_handler(text="Назад", state=Phone.category)
 async def back1(message: types.Message, state: FSMContext):
     await message.answer("Вы нажали назад", reply_markup=menuAll)
     await state.finish()
+
 
 @dp.message_handler(text="Назад", state=Pixel.subcategory)
 async def back1(message: types.Message, state: FSMContext):
     await message.answer("Вы нажали назад", reply_markup=tel)
     await Phone.category.set()
 
+
 @dp.message_handler(text="Назад", state=Pixel.subproduct)
 async def back1(message: types.Message, state: FSMContext):
     await message.answer("Вы нажали назад", reply_markup=pixelModel)
     await Pixel.product.set()
+
 
 @dp.message_handler(text="Назад", state=Pixel.product)
 async def back1(message: types.Message, state: FSMContext):
