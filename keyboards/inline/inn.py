@@ -1,27 +1,14 @@
-from aiogram.types import ReplyKeyboardMarkup,KeyboardButton
+from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
-menu = ReplyKeyboardMarkup(
-    keyboard=[
-        [KeyboardButton(text="Заполнить анкету")]
-    ],
-    resize_keyboard=True,
-    one_time_keyboard=True
+donate = InlineKeyboardMarkup(
+    inline_keyboard=[
+        [InlineKeyboardButton(text="Поддержать наш проект!", callback_data="get_donate")]
+    ]
 )
 
-anketa = ReplyKeyboardMarkup(
-    keyboard=[
-        [KeyboardButton(text="Найти работу"),KeyboardButton(text="Найти помощника")],
-        [KeyboardButton(text="Нужен сотрудник")]
-    ],
-    resize_keyboard=True,
-    one_time_keyboard=True
-)
-contactnum = ReplyKeyboardMarkup(
-    keyboard=[
-        [
-            KeyboardButton(text="Поделиться номером", request_contact=True)
-        ]
-    ],
-    resize_keyboard=True,
-    one_time_keyboard=True
+donate_version = InlineKeyboardMarkup(
+    inline_keyboard=[
+        [InlineKeyboardButton(text="QIWI", url="qiwi.com/n/ZUFARIK")],
+        [InlineKeyboardButton(text="Юmoney", url="https://yoomoney.ru/to/4100117381464409/0")]
+    ]
 )

@@ -9,7 +9,7 @@ class Phone(StatesGroup):
     productP = State()
     productMI = State()
     subproductR = State()
-    subproductMIX= State()
+    subproductMIX = State()
     subproductP = State()
     subproductMI = State()
 
@@ -25,6 +25,7 @@ class iPhone(StatesGroup):
     product = State()
     subproduct = State()
 
+
 class Samsung(StatesGroup):
     subcategory = State()
     productS = State()
@@ -32,6 +33,6 @@ class Samsung(StatesGroup):
     productZ = State()
     productN = State()
     subproductS = State()
-    subproductA= State()
+    subproductA = State()
     subproductZ = State()
     subproductN = State()
