@@ -8,7 +8,7 @@ donate = InlineKeyboardMarkup(
 
 donate_version = InlineKeyboardMarkup(
     inline_keyboard=[
-        [InlineKeyboardButton(text="QIWI", url="qiwi.com/n/ZUFARIK")],
+        [InlineKeyboardButton(text="QIWI", url="https://qiwi.com/n/ZUFARIK")],
         [InlineKeyboardButton(text="Юmoney", url="https://yoomoney.ru/to/4100117381464409/0")]
     ]
 )
