@@ -3,6 +3,7 @@ from aiogram.dispatcher import FSMContext
 
 from keyboards.default.buttons import menuAll, tel
 from keyboards.default.pixel import pixel4, pixel5, pixel6, pixelModel, modelListPixel, pixelmod, sheets_2
+from keyboards.inline.inn import donate,donate_version
 from loader import dp
 from states.state import Phone, Pixel
 
@@ -99,7 +100,7 @@ async def model_answer(message: types.Message):
                                      f'•GPS: {gps.value}\n'
                                      f'•NFC: {nfc.value}\n'
                                      f'•USB: {usb.value}\n'
-                                     f'•Bluetooth: {bluet.value}\n')
+                                     f'•Bluetooth: {bluet.value}\n',reply_markup=donate)
     await Pixel.subproduct.set()
 
 
@@ -125,3 +126,13 @@ async def back1(message: types.Message):
 async def back1(message: types.Message):
     await message.answer("Вы нажали назад", reply_markup=pixelmod)
     await Pixel.subcategory.set()
+
+@dp.callback_query_handler(text="donate",state=Pixel.subproduct)
+async def get_donate(call: types.CallbackQuery):
+    await call.message.answer('Выберите удобный способ поддержки!', reply_markup=donate_version)
+    await Pixel.subproduct.set()
+
+@dp.message_handler(text='Главное меню🏠', state=Pixel)
+async def main_menu(message: types.Message, state: FSMContext):
+    await message.answer("Вы нажали Главное меню", reply_markup=menuAll)
+    await state.finish()
