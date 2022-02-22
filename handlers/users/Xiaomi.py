@@ -452,22 +452,25 @@ async def model_answer(message: types.Message):
                 await Phone.subproductP.set()
 
 
-@dp.callback_query_handler(text="donate",state=Phone.subproductR)
+@dp.callback_query_handler(text="donate", state=Phone.subproductR)
 async def get_donate(call: types.CallbackQuery):
     await call.message.answer('Выберите удобный способ поддержки!', reply_markup=donate_version)
     await Phone.subproductR.set()
 
-@dp.callback_query_handler(text="donate",state=Phone.subproductP)
+
+@dp.callback_query_handler(text="donate", state=Phone.subproductP)
 async def get_donate(call: types.CallbackQuery):
     await call.message.answer('Выберите удобный способ поддержки!', reply_markup=donate_version)
     await Phone.subproductP.set()
 
-@dp.callback_query_handler(text="donate",state=Phone.subproductMI)
+
+@dp.callback_query_handler(text="donate", state=Phone.subproductMI)
 async def get_donate(call: types.CallbackQuery):
     await call.message.answer('Выберите удобный способ поддержки!', reply_markup=donate_version)
     await Phone.subproductMI.set()
 
-@dp.callback_query_handler(text="donate",state=Phone.subproductMIX)
+
+@dp.callback_query_handler(text="donate", state=Phone.subproductMIX)
 async def get_donate(call: types.CallbackQuery):
     await call.message.answer('Выберите удобный способ поддержки!', reply_markup=donate_version)
     await Phone.subproductMIX.set()

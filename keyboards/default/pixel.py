@@ -1,11 +1,10 @@
 import openpyxl
 from aiogram.types import KeyboardButton, ReplyKeyboardMarkup
 
-listAll = openpyxl.open("excel\\DATABASE.xlsx", read_only=True)
-sheetP = listAll.active
-sheets_2 = listAll.worksheets[1]
+listAll = openpyxl.open("excel\\google.xlsx", read_only=True)
+sheets_2 = listAll.active
 modelListPixel = ['space', 'space']
-for i in range(3, sheetP.max_row):
+for i in range(3, sheets_2.max_row):
     model = sheets_2[i][0]
     modelListPixel.append(model.value)
 pixel4 = ReplyKeyboardMarkup(resize_keyboard=True)

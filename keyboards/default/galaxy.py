@@ -1,7 +1,7 @@
 import openpyxl
 from aiogram.types import KeyboardButton, ReplyKeyboardMarkup
 
-# listAll = openpyxl.open("excel\\DATABASE.xlsx", read_only=True)
+# listAll = openpyxl.open("excel\\samsung.xlsx", read_only=True)
 # sheetG = listAll.active
 # sheets_4 = listAll.worksheets[3]
 # modelListGalaxy = ['space', 'space']

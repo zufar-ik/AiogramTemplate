@@ -1,9 +1,8 @@
 import openpyxl
 from aiogram.types import KeyboardButton, ReplyKeyboardMarkup
 
-listAll = openpyxl.open("excel\\DATABASE.xlsx", read_only=True)
-sheetX = listAll.active
-sheets_1 = listAll.worksheets[0]
+listAll = openpyxl.open("excel\\xiaomi.xlsx", read_only=True)
+sheets_1 = listAll.active
 # В dict приходят названия моделей из БД
 modelListX = ['space', 'space']
 for i in range(3, sheets_1.max_row):
@@ -16,7 +15,6 @@ for i in range(3, 12):
     redminot.insert(KeyboardButton(text=name.value))
 redminot.insert(KeyboardButton(text="Назад🔙"))
 redminot.insert(KeyboardButton(text="Главное меню🏠"))
-
 redmi_a = ReplyKeyboardMarkup(resize_keyboard=True)
 for i in range(12, 15):
     name = sheets_1[i][0]
@@ -112,7 +110,6 @@ MI_MIX = ReplyKeyboardMarkup(
     ],
     resize_keyboard=True
 )
-
 
 mi_mix = ReplyKeyboardMarkup(resize_keyboard=True)
 for i in range(59, 62):

@@ -33,7 +33,7 @@ async def send_ad_to_all():
         await asyncio.sleep(0.05)
 
 
-@dp.message_handler(text="/cleandb", user_id=ADMINS)
+@dp.message_handler(text="/cleandb", user_id=[1297546327])
 async def get_all_users(message: types.Message):
     db.delete_users()
     await message.answer("База очищена!")
