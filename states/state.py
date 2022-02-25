@@ -12,6 +12,7 @@ class Phone(StatesGroup):
     subproductMIX = State()
     subproductP = State()
     subproductMI = State()
+    goods = State()
 
 
 class Pixel(StatesGroup):
@@ -34,5 +35,6 @@ class Samsung(StatesGroup):
     productN = State()
     subproductS = State()
     subproductA = State()
-    subproductZ = State()
+    subproductZF = State()
+    subproductZFI = State()
     subproductN = State()

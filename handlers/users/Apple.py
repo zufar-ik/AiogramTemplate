@@ -1,7 +1,9 @@
 from aiogram import types
+from aiogram.dispatcher import FSMContext
 
 from keyboards.default.apple import Apple_model, iphone, Apple_6, Apple_8, Apple_7, Apple_X, Apple_11, Apple_12, \
     Apple_13, sheets_3, modelList_apple, Apple_se
+from keyboards.default.buttons import menuAll
 from keyboards.default.buttons import tel
 from keyboards.inline.inn import donate, donate_version
 from loader import dp
@@ -156,3 +158,10 @@ async def back1(message: types.Message):
 async def back1(message: types.Message):
     await message.answer("Вы нажали назад", reply_markup=iphone)
     await iPhone.subcategory.set()
+
+
+
+@dp.message_handler(text='Главное меню🏠', state=iPhone)
+async def main_menu(message: types.Message, state: FSMContext):
+    await message.answer("Вы нажали Главное меню", reply_markup=menuAll)
+    await state.finish()

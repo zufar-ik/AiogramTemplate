@@ -10,31 +10,31 @@ from states.state import Phone, Pixel
 
 @dp.message_handler(text='Google', state=Phone.category)
 async def key(message: types.Message):
-    await message.answer("Выберите линейку смартфонов", reply_markup=pixelmod)
+    await message.answer("Выберите линейку смартфонов Google", reply_markup=pixelmod)
     await Pixel.subcategory.set()
 
 
 @dp.message_handler(text="Pixel", state=Pixel.subcategory)
 async def key(message: types.Message):
-    await message.answer("Выберите линейку смартфонов", reply_markup=pixelModel)
+    await message.answer("Выберите линейку смартфонов Pixel", reply_markup=pixelModel)
     await Pixel.product.set()
 
 
 @dp.message_handler(text="Google Pixel 4/XL/a", state=Pixel.product)
 async def key(message: types.Message):
-    await message.answer("Выберите серию смартфона Pixel", reply_markup=pixel4)
+    await message.answer("Выберите серию смартфона Pixel 4", reply_markup=pixel4)
     await Pixel.subproduct.set()
 
 
 @dp.message_handler(text="Google Pixel 5/a", state=Pixel.product)
 async def key(message: types.Message):
-    await message.answer("Выберите серию смартфона Pixel", reply_markup=pixel5)
+    await message.answer("Выберите серию смартфона Pixel 5", reply_markup=pixel5)
     await Pixel.subproduct.set()
 
 
 @dp.message_handler(text="Google Pixel 6/Pro", state=Pixel.product)
 async def key(message: types.Message):
-    await message.answer("Выберите серию смартфона Pixel", reply_markup=pixel6)
+    await message.answer("Выберите серию смартфона Pixel 6", reply_markup=pixel6)
     await Pixel.subproduct.set()
 
 

@@ -8,6 +8,7 @@ modelListX = ['space', 'space']
 for i in range(3, sheets_1.max_row):
     modelxia = sheets_1[i][0]
     modelListX.append(modelxia.value)
+
 # Для кнопок в боте с названиями моделей
 redminot = ReplyKeyboardMarkup(resize_keyboard=True)
 for i in range(3, 12):

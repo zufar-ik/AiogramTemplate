@@ -386,7 +386,7 @@ async def model_answer(message: types.Message):
                 await Phone.subproductMIX.set()
 
 
-@dp.message_handler(text=modelListX, state=Phone.subproductP)
+@dp.message_handler(text=modelListX, state=Phone.subproductP or Phone.goods)
 async def model_answer(message: types.Message):
     for i in modelListX:
         if message.text == i:
