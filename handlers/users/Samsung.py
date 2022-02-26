@@ -260,7 +260,7 @@ async def model_answer(message: types.Message):
                                      f'•GPS: {gps.value}\n'
                                      f'•NFC: {nfc.value}\n'
                                      f'•USB: {usb.value}\n'
-                                     f'•Bluetooth: {bluet.value}\n')
+                                     f'•Bluetooth: {bluet.value}\n', reply_markup=donate)
                 await Samsung.subproductS.set()
 
 
@@ -327,7 +327,7 @@ async def model_answer(message: types.Message):
                                      f'•GPS: {gps.value}\n'
                                      f'•NFC: {nfc.value}\n'
                                      f'•USB: {usb.value}\n'
-                                     f'•Bluetooth: {bluet.value}\n')
+                                     f'•Bluetooth: {bluet.value}\n', reply_markup=donate)
                 await Samsung.subproductZFI.set()
 
 
@@ -394,7 +394,7 @@ async def model_answer(message: types.Message):
                                      f'•GPS: {gps.value}\n'
                                      f'•NFC: {nfc.value}\n'
                                      f'•USB: {usb.value}\n'
-                                     f'•Bluetooth: {bluet.value}\n')
+                                     f'•Bluetooth: {bluet.value}\n', reply_markup=donate)
                 await Samsung.subproductZF.set()
 
 
@@ -461,7 +461,7 @@ async def model_answer(message: types.Message):
                                      f'•GPS: {gps.value}\n'
                                      f'•NFC: {nfc.value}\n'
                                      f'•USB: {usb.value}\n'
-                                     f'•Bluetooth: {bluet.value}\n')
+                                     f'•Bluetooth: {bluet.value}\n', reply_markup=donate)
                 await Samsung.subproductA.set()
 
 
@@ -566,3 +566,9 @@ async def get_donate(call: types.CallbackQuery):
 async def get_donate(call: types.CallbackQuery):
     await call.message.answer('Выберите удобный способ поддержки!', reply_markup=donate_version)
     await Samsung.subproductA.set()
+
+
+@dp.callback_query_handler(text="donate", state=Samsung.subproductN)
+async def get_donate(call: types.CallbackQuery):
+    await call.message.answer('Выберите удобный способ поддержки!', reply_markup=donate_version)
+    await Samsung.subproductN.set()
