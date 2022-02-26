@@ -136,10 +136,10 @@ async def model_answer(message: types.Message):
                 await iPhone.subproduct.set()
 
 
-@dp.callback_query_handler(text="donate", state=Phone.subproductR)
+@dp.callback_query_handler(text="donate", state=iPhone.subproduct)
 async def get_donate(call: types.CallbackQuery):
     await call.message.answer('Выберите удобный способ поддержки!', reply_markup=donate_version)
-    await Phone.subproductR.set()
+    await iPhone.subproduct.set()
 
 
 @dp.message_handler(text="Назад🔙", state=iPhone.subcategory)
