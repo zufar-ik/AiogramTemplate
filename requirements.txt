@@ -1,4 +1,4 @@
-aiogram~=2.14
-environs~=8.0.0
+aiogram==2.19
+environs==8.0.0
+openpyxl
 pandas
-openpyxl~=3.0.9
