@@ -1,7 +1,7 @@
 import openpyxl
 from aiogram.types import KeyboardButton, ReplyKeyboardMarkup
 
-listAll = openpyxl.open("excel\\iPhone.xlsx", read_only=True)
+listAll = openpyxl.open("excel/iPhone.xlsx", read_only=True)
 sheets_3 = listAll.active
 modelList_apple = ['space', 'space']
 for i in range(3, sheets_3.max_row):

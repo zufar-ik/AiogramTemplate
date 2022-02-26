@@ -1,7 +1,7 @@
 import openpyxl
 from aiogram.types import KeyboardButton, ReplyKeyboardMarkup
 
-listAll = openpyxl.open("excel\\google.xlsx", read_only=True)
+listAll = openpyxl.open("excel/google.xlsx", read_only=True)
 sheets_2 = listAll.active
 modelListPixel = ['space', 'space']
 for i in range(3, sheets_2.max_row):

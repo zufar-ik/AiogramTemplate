@@ -1,7 +1,7 @@
 import openpyxl
 from aiogram.types import KeyboardButton, ReplyKeyboardMarkup
 
-listAll = openpyxl.open("excel\\xiaomi.xlsx", read_only=True)
+listAll = openpyxl.open("excel/xiaomi.xlsx", read_only=True)
 sheets_1 = listAll.active
 # В dict приходят названия моделей из БД
 modelListX = ['space', 'space']
