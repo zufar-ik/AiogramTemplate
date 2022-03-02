@@ -276,7 +276,7 @@ async def addtocart(message: types.Message):
 
 @dp.message_handler(text="Отмена", state=Phone.subproductR)
 async def get_donate(message: types.Message):
-    await message.answer('Выберите удобный способ поддержки!', reply_markup=Redmi)
+    await message.answer('Вы нажали отмена', reply_markup=Redmi)
     await Phone.productR.set()
 
 
@@ -388,7 +388,7 @@ async def addtocart(message: types.Message):
 
 @dp.message_handler(text="Отмена", state=Phone.subproductMI)
 async def get_donate(message: types.Message):
-    await message.answer('Выберите удобный способ поддержки!', reply_markup=MI)
+    await message.answer('Вы нажали отмена', reply_markup=MI)
     await Phone.productMI.set()
 
 
@@ -507,7 +507,7 @@ async def addtocart(message: types.Message):
 
 @dp.message_handler(text="Отмена", state=Phone.subproductMIX)
 async def get_donate(message: types.Message):
-    await message.answer('Выберите удобный способ поддержки!', reply_markup=MI_MIX)
+    await message.answer('Вы нажали отмена', reply_markup=MI_MIX)
     await Phone.productMIX.set()
 
 @dp.message_handler(state=Phone.subproductMIX)
@@ -618,7 +618,7 @@ async def addtocart(message: types.Message):
 
 @dp.message_handler(text="Отмена", state=Phone.subproductP)
 async def get_donate(message: types.Message):
-    await message.answer('Выберите удобный способ поддержки!', reply_markup=POCO)
+    await message.answer('Вы нажали отмена', reply_markup=POCO)
     await Phone.productP.set()
 
 
