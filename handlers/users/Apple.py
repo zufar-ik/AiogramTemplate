@@ -177,6 +177,10 @@ async def add1(message: types.Message, state: FSMContext):
                              f"Кол-во: {n}, Цена за штуку: {price}",reply_markup=Apple_model)
     await iPhone.product.set()
 
+@dp.message_handler(text="Отмена", state=iPhone)
+async def get_donate(call: types.CallbackQuery):
+    await call.message.answer('Выберите удобный способ поддержки!', reply_markup=Apple_model)
+    await iPhone.product.set()
 
 @dp.callback_query_handler(text="donate", state=iPhone.subproduct)
 async def get_donate(call: types.CallbackQuery):

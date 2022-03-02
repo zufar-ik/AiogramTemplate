@@ -704,6 +704,11 @@ async def add1(message: types.Message, state: FSMContext):
                              f"Кол-во: {n}, Цена за штуку: {price}",reply_markup=galaxyModelN)
     await Samsung.productN.set()
 
+@dp.message_handler(text="Отмена", state=Samsung)
+async def get_donate(call: types.CallbackQuery):
+    await call.message.answer('Выберите удобный способ поддержки!', reply_markup=galaxymod)
+    await Samsung.subcategory.set()
+
 
 @dp.message_handler(text='Главное меню🏠', state=Samsung)
 async def main_menu(message: types.Message, state: FSMContext):

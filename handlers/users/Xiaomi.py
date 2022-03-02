@@ -599,6 +599,10 @@ async def add1(message: types.Message, state: FSMContext):
                              f"Кол-во: {n}, Цена за штуку: {price}",reply_markup=POCO)
     await Phone.productP.set()
 
+@dp.message_handler(text="Отмена", state=Phone)
+async def get_donate(call: types.CallbackQuery):
+    await call.message.answer('Выберите удобный способ поддержки!', reply_markup=xiaomi)
+    await Phone.subcategory.set()
 
 @dp.callback_query_handler(text="donate", state=Phone.subproductR)
 async def get_donate(call: types.CallbackQuery):
