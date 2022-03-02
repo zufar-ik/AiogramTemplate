@@ -38,3 +38,9 @@ class Samsung(StatesGroup):
     subproductZF = State()
     subproductZFI = State()
     subproductN = State()
+
+class Question(StatesGroup):
+    questionad = State()
+
+class Reklama(StatesGroup):
+    reklama = State()
