@@ -6,7 +6,7 @@ from keyboards.default.apple import Apple_model, iphone, Apple_6, Apple_8, Apple
 from keyboards.default.buttons import menuAll
 from keyboards.default.buttons import tel
 from keyboards.default.forcart import count1, add_product
-from keyboards.inline.inn import donate, donate_version
+from keyboards.inline.inn import donate_version
 from loader import dp, db
 from states.state import Phone, iPhone
 
@@ -72,7 +72,7 @@ async def key(message: types.Message):
 
 
 @dp.message_handler(text=modelList_apple, state=iPhone.subproduct)
-async def model_answer(message: types.Message,state:FSMContext):
+async def model_answer(message: types.Message, state: FSMContext):
     await message.answer(message.text)
     namex = message.text
     await state.update_data(
@@ -141,7 +141,7 @@ async def model_answer(message: types.Message,state:FSMContext):
                                      f'•Bluetooth: {bluet.value}\n', reply_markup=add_product)
                 Price = price.value
                 await state.update_data(
-                    {"price":Price}
+                    {"price": Price}
                 )
                 await iPhone.subproduct.set()
 
@@ -151,12 +151,26 @@ async def addtocart(message: types.Message):
     await message.answer("Сколько смартфонов хотите купить?", reply_markup=count1)
     await iPhone.subproduct.set()
 
+
+@dp.message_handler(text="🔙Назад", state=iPhone.subproduct)
+async def addtocart(message: types.Message):
+    await message.answer("Вы нажали назад", reply_markup=Apple_model)
+    await iPhone.product.set()
+
+
+@dp.message_handler(text="Отмена", state=iPhone.subproduct)
+async def get_donate(message: types.Message):
+    await message.answer('Вы нажали отмена', reply_markup=Apple_model)
+    await iPhone.product.set()
+
+
 def is_number(s):
     try:
         float(s)
         return True
     except ValueError:
         return False
+
 
 @dp.message_handler(state=iPhone.subproduct)
 async def add1(message: types.Message, state: FSMContext):
@@ -166,7 +180,7 @@ async def add1(message: types.Message, state: FSMContext):
         NAME = dataall.get("name")
         price = dataall.get("price")
         idname = message.from_user.id
-        product = db.check_product(tg_id = message.from_user.id,Name=NAME)
+        product = db.check_product(tg_id=message.from_user.id, Name=NAME)
         if product:
             db.update_product(tg_id=idname, Name=NAME, quantity=int(product[2]) + int(n))
         else:
@@ -174,13 +188,9 @@ async def add1(message: types.Message, state: FSMContext):
         await message.answer("Ваш заказ добавлен в корзинку!\n"
                              f"Ваш ID {idname}\n"
                              f"Название продукта {NAME}\n"
-                             f"Кол-во: {n}, Цена за штуку: {price}",reply_markup=Apple_model)
+                             f"Кол-во: {n}, Цена за штуку: {price}", reply_markup=Apple_model)
     await iPhone.product.set()
 
-@dp.message_handler(text="Отмена", state=iPhone)
-async def get_donate(call: types.CallbackQuery):
-    await call.message.answer('Выберите удобный способ поддержки!', reply_markup=Apple_model)
-    await iPhone.product.set()
 
 @dp.callback_query_handler(text="donate", state=iPhone.subproduct)
 async def get_donate(call: types.CallbackQuery):
@@ -204,7 +214,6 @@ async def back1(message: types.Message):
 async def back1(message: types.Message):
     await message.answer("Вы нажали назад", reply_markup=iphone)
     await iPhone.subcategory.set()
-
 
 
 @dp.message_handler(text='Главное меню🏠', state=iPhone)

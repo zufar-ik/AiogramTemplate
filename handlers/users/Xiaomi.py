@@ -21,8 +21,6 @@ async def all_brand(message: types.Message):
     await message.answer("Этот раздел еще в разработке!")
 
 
-
-
 @dp.message_handler(text="Назад🔙", state=Phone.category)
 async def back(message: types.Message, state: FSMContext):
     await message.answer("Вы нажали назад", reply_markup=menuAll)
@@ -192,7 +190,7 @@ async def main_menu(message: types.Message, state: FSMContext):
 
 
 @dp.message_handler(text=modelListX, state=Phone.subproductR)
-async def model_answer(message: types.Message,state: FSMContext):
+async def model_answer(message: types.Message, state: FSMContext):
     await message.answer(message.text)
     namex = message.text
     await state.update_data(
@@ -261,7 +259,7 @@ async def model_answer(message: types.Message,state: FSMContext):
                                      f'•Bluetooth: {bluet.value}\n', reply_markup=add_product)
                 Price = price.value
                 await state.update_data(
-                    {"price":Price}
+                    {"price": Price}
                 )
                 await Phone.subproductR.set()
 
@@ -270,6 +268,17 @@ async def model_answer(message: types.Message,state: FSMContext):
 async def addtocart(message: types.Message):
     await message.answer("Сколько смартфонов хотите купить?", reply_markup=count1)
     await Phone.subproductR.set()
+
+@dp.message_handler(text="🔙Назад", state=Phone.subproductR)
+async def addtocart(message: types.Message):
+    await message.answer("Вы нажали назад", reply_markup=Redmi)
+    await Phone.productR.set()
+
+@dp.message_handler(text="Отмена", state=Phone.subproductR)
+async def get_donate(message: types.Message):
+    await message.answer('Выберите удобный способ поддержки!', reply_markup=Redmi)
+    await Phone.productR.set()
+
 
 
 @dp.message_handler(state=Phone.subproductR)
@@ -280,7 +289,7 @@ async def add1(message: types.Message, state: FSMContext):
         NAME = dataall.get("name")
         price = dataall.get("price")
         idname = message.from_user.id
-        product = db.check_product(tg_id = message.from_user.id,Name=NAME)
+        product = db.check_product(tg_id=message.from_user.id, Name=NAME)
         if product:
             db.update_product(tg_id=idname, Name=NAME, quantity=int(product[2]) + int(n))
         else:
@@ -288,12 +297,12 @@ async def add1(message: types.Message, state: FSMContext):
         await message.answer("Ваш заказ добавлен в корзинку!\n"
                              f"Ваш ID {idname}\n"
                              f"Название продукта {NAME}\n"
-                             f"Кол-во: {n}, Цена за штуку: {price}",reply_markup=Redmi)
+                             f"Кол-во: {n}, Цена за штуку: {price}", reply_markup=Redmi)
     await Phone.productR.set()
 
 
 @dp.message_handler(text=modelListX, state=Phone.subproductMI)
-async def model_answer(message: types.Message,state:FSMContext):
+async def model_answer(message: types.Message, state: FSMContext):
     await message.answer(message.text)
     namex = message.text
     await state.update_data(
@@ -362,7 +371,7 @@ async def model_answer(message: types.Message,state:FSMContext):
                                      f'•Bluetooth: {bluet.value}\n', reply_markup=add_product)
                 Price = price.value
                 await state.update_data(
-                    {"price":Price}
+                    {"price": Price}
                 )
                 await Phone.subproductMI.set()
 
@@ -372,12 +381,24 @@ async def addtocart(message: types.Message):
     await message.answer("Сколько смартфонов хотите купить?", reply_markup=count1)
     await Phone.subproductMI.set()
 
+@dp.message_handler(text="🔙Назад", state=Phone.subproductMI)
+async def addtocart(message: types.Message):
+    await message.answer("Вы нажали назад", reply_markup=MI)
+    await Phone.productMI.set()
+
+@dp.message_handler(text="Отмена", state=Phone.subproductMI)
+async def get_donate(message: types.Message):
+    await message.answer('Выберите удобный способ поддержки!', reply_markup=MI)
+    await Phone.productMI.set()
+
+
 def is_number(s):
     try:
         float(s)
         return True
     except ValueError:
         return False
+
 
 @dp.message_handler(state=Phone.subproductMI)
 async def add1(message: types.Message, state: FSMContext):
@@ -387,7 +408,7 @@ async def add1(message: types.Message, state: FSMContext):
         NAME = dataall.get("name")
         price = dataall.get("price")
         idname = message.from_user.id
-        product = db.check_product(tg_id = message.from_user.id,Name=NAME)
+        product = db.check_product(tg_id=message.from_user.id, Name=NAME)
         if product:
             db.update_product(tg_id=idname, Name=NAME, quantity=int(product[2]) + int(n))
         else:
@@ -395,12 +416,12 @@ async def add1(message: types.Message, state: FSMContext):
         await message.answer("Ваш заказ добавлен в корзинку!\n"
                              f"Ваш ID {idname}\n"
                              f"Название продукта {NAME}\n"
-                             f"Кол-во: {n}, Цена за штуку: {price}",reply_markup=MI)
+                             f"Кол-во: {n}, Цена за штуку: {price}", reply_markup=MI)
     await Phone.productMI.set()
 
 
 @dp.message_handler(text=modelListX, state=Phone.subproductMIX)
-async def model_answer(message: types.Message,state:FSMContext):
+async def model_answer(message: types.Message, state: FSMContext):
     await message.answer(message.text)
     namex = message.text
     await state.update_data(
@@ -469,7 +490,7 @@ async def model_answer(message: types.Message,state:FSMContext):
                                      f'•Bluetooth: {bluet.value}\n', reply_markup=add_product)
                 Price = price.value
                 await state.update_data(
-                    {"price":Price}
+                    {"price": Price}
                 )
                 await Phone.subproductMIX.set()
 
@@ -479,6 +500,15 @@ async def addtocart(message: types.Message):
     await message.answer("Сколько смартфонов хотите купить?", reply_markup=count1)
     await Phone.subproductMIX.set()
 
+@dp.message_handler(text="🔙Назад", state=Phone.subproductMIX)
+async def addtocart(message: types.Message):
+    await message.answer("Вы нажали назад", reply_markup=MI_MIX)
+    await Phone.productMIX.set()
+
+@dp.message_handler(text="Отмена", state=Phone.subproductMIX)
+async def get_donate(message: types.Message):
+    await message.answer('Выберите удобный способ поддержки!', reply_markup=MI_MIX)
+    await Phone.productMIX.set()
 
 @dp.message_handler(state=Phone.subproductMIX)
 async def add1(message: types.Message, state: FSMContext):
@@ -488,7 +518,7 @@ async def add1(message: types.Message, state: FSMContext):
         NAME = dataall.get("name")
         price = dataall.get("price")
         idname = message.from_user.id
-        product = db.check_product(tg_id = message.from_user.id,Name=NAME)
+        product = db.check_product(tg_id=message.from_user.id, Name=NAME)
         if product:
             db.update_product(tg_id=idname, Name=NAME, quantity=int(product[2]) + int(n))
         else:
@@ -496,7 +526,7 @@ async def add1(message: types.Message, state: FSMContext):
         await message.answer("Ваш заказ добавлен в корзинку!\n"
                              f"Ваш ID {idname}\n"
                              f"Название продукта {NAME}\n"
-                             f"Кол-во: {n}, Цена за штуку: {price}",reply_markup=MI_MIX)
+                             f"Кол-во: {n}, Цена за штуку: {price}", reply_markup=MI_MIX)
     await Phone.productMIX.set()
 
 
@@ -569,7 +599,7 @@ async def model_answer(message: types.Message, state: FSMContext):
                                      f'•Bluetooth: {bluet.value}\n', reply_markup=add_product)
                 Price = price.value
                 await state.update_data(
-                    {"price":Price}
+                    {"price": Price}
                 )
                 await Phone.subproductP.set()
 
@@ -580,6 +610,20 @@ async def addtocart(message: types.Message):
     await Phone.subproductP.set()
 
 
+@dp.message_handler(text="🔙Назад", state=Phone.subproductP)
+async def addtocart(message: types.Message):
+    await message.answer("Вы нажали назад", reply_markup=POCO)
+    await Phone.productP.set()
+
+
+@dp.message_handler(text="Отмена", state=Phone.subproductP)
+async def get_donate(message: types.Message):
+    await message.answer('Выберите удобный способ поддержки!', reply_markup=POCO)
+    await Phone.productP.set()
+
+
+
+
 @dp.message_handler(state=Phone.subproductP)
 async def add1(message: types.Message, state: FSMContext):
     n = message.text
@@ -588,7 +632,7 @@ async def add1(message: types.Message, state: FSMContext):
         NAME = dataall.get("name")
         price = dataall.get("price")
         idname = message.from_user.id
-        product = db.check_product(tg_id = message.from_user.id,Name=NAME)
+        product = db.check_product(tg_id=message.from_user.id, Name=NAME)
         if product:
             db.update_product(tg_id=idname, Name=NAME, quantity=int(product[2]) + int(n))
         else:
@@ -596,13 +640,12 @@ async def add1(message: types.Message, state: FSMContext):
         await message.answer("Ваш заказ добавлен в корзинку!\n"
                              f"Ваш ID {idname}\n"
                              f"Название продукта {NAME}\n"
-                             f"Кол-во: {n}, Цена за штуку: {price}",reply_markup=POCO)
+                             f"Кол-во: {n}, Цена за штуку: {price}", reply_markup=POCO)
     await Phone.productP.set()
 
-@dp.message_handler(text="Отмена", state=Phone)
-async def get_donate(call: types.CallbackQuery):
-    await call.message.answer('Выберите удобный способ поддержки!', reply_markup=xiaomi)
-    await Phone.subcategory.set()
+
+
+
 
 @dp.callback_query_handler(text="donate", state=Phone.subproductR)
 async def get_donate(call: types.CallbackQuery):

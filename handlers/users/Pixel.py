@@ -118,6 +118,11 @@ async def addtocart(message: types.Message):
     await message.answer("Сколько смартфонов хотите купить?", reply_markup=count1)
     await Pixel.subproduct.set()
 
+@dp.message_handler(text="Отмена", state=Pixel.subproduct)
+async def get_donate(message: types.Message):
+    await message.answer('Вы нажали отмена', reply_markup=pixelModel)
+    await Pixel.product.set()
+
 def is_number(s):
     try:
         float(s)
@@ -143,6 +148,7 @@ async def add1(message: types.Message, state: FSMContext):
                              f"Название продукта {NAME}\n"
                              f"Кол-во: {n}, Цена за штуку: {price}",reply_markup=pixelModel)
     await Pixel.product.set()
+
 
 @dp.message_handler(text="Назад🔙", state=Phone.category)
 async def back1(message: types.Message, state: FSMContext):

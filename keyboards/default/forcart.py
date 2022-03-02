@@ -3,7 +3,7 @@ from aiogram.types import ReplyKeyboardMarkup,KeyboardButton
 add_product = ReplyKeyboardMarkup(
     keyboard=[
         [KeyboardButton(text="Добавить в корзинку!")],
-        [KeyboardButton(text="Отмена")]
+        [KeyboardButton(text="🔙Назад")]
     ],
     resize_keyboard=True
 )
