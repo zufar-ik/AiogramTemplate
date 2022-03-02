@@ -1,5 +1,6 @@
 from aiogram import types
 from aiogram.dispatcher import FSMContext
+from aiogram.types import ReplyKeyboardRemove
 
 from keyboards.default.buttons import tel, xiaomi, Redmi, menuAll
 from keyboards.default.forcart import add_product, count1
@@ -22,8 +23,8 @@ async def all_brand(message: types.Message):
 
 
 @dp.message_handler(text="Связаться с администратором⁉️")
-async def all_brand(message: types.Message, state: FSMContext):
-    await message.answer("Задайте вопрос!")
+async def all_brand(message: types.Message):
+    await message.answer("Задайте вопрос!",reply_markup=ReplyKeyboardRemove())
     await Question.questionad.set()
 
 @dp.message_handler(state=Question.questionad)
