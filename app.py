@@ -12,6 +12,7 @@ async def on_startup(dispatcher):
 
     # Создаем базу данных пользователей:
     try:
+        db.create_cart()
         db.create_table_users()
     except Exception as err:
         print(err)

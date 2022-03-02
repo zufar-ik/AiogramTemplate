@@ -39,6 +39,16 @@ class Database:
 """
         self.execute(sql, commit=True)
 
+    def create_cart(self):
+        sql = """
+        CREATE TABLE Cart (
+            tg_id int NOT NULL,
+            Name varchar(255),
+            quantity int
+            );
+"""
+        self.execute(sql, commit=True)
+
     @staticmethod
     def format_args(sql, parameters: dict):
         sql += " AND ".join([
@@ -54,11 +64,41 @@ class Database:
         """
         self.execute(sql, parameters=(id, name, email, language), commit=True)
 
+    def add_product(self, tg_id: int, Name: str, quantity: int):
+        sql = """
+        INSERT INTO Cart(tg_id, Name, quantity) VALUES(?, ?, ?)
+        """
+        self.execute(sql, parameters=(tg_id, Name, quantity), commit=True)
+
     def select_all_users(self):
         sql = """
         SELECT * FROM Users
         """
         return self.execute(sql, fetchall=True)
+
+    def get_products(self, **kwargs):
+        sql = "SELECT * FROM Cart WHERE "
+        sql, parameters = self.format_args(sql, kwargs)
+
+        return self.execute(sql, parameters=parameters, fetchall=True)
+
+    def check_product(self, **kwargs):
+        sql = "SELECT * FROM Cart WHERE "
+        sql, parameters = self.format_args(sql, kwargs)
+        return self.execute(sql, parameters=parameters, fetchone=True)
+
+    def update_product(self, tg_id: int, Name: str, quantity: int):
+        sql = "UPDATE Cart SET quantity=? WHERE tg_id=? AND Name=?"
+        return self.execute(sql, (quantity, tg_id, Name), commit=True)
+
+    def delete_product(self, tg_id: int, Name: str):
+        sql = "DELETE FROM Cart WHERE tg_id=? AND Name=?"
+        return self.execute(sql, (tg_id, Name), commit=True)
+
+    def clear_cart(self, **kwargs):
+        sql = "DELETE FROM Cart WHERE "
+        sql, parameters = self.format_args(sql, kwargs)
+        return self.execute(sql, parameters=parameters, commit=True)
 
     def select_user(self, **kwargs):
         # SQL_EXAMPLE = "SELECT * FROM Users where id=1 AND Name='John'"
@@ -80,6 +120,9 @@ class Database:
 
     def delete_users(self):
         self.execute("DELETE FROM Users WHERE TRUE", commit=True)
+
+    def delete_cart(self):
+        self.execute("DELETE FROM Cart WHERE TRUE", commit=True)
 
 
 def logger(statement):

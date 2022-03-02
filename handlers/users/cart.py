@@ -1,53 +1,46 @@
-@dp.message_handler(state=anketa.amout)
-async def orqa1(message: types.Message, state: FSMContext):
-    n = message.text
-    if is_number(n) == True:
-        data = await state.get_data()
-        od = data.get('odi')
-        cat = data.get('cat')
-        nn = price[od]* int(n)
-        if cat == 'Shashlik':
-            await message.answer(f"{od} <i>dan {n} ta, savatchaga🛒 qo'shildi</i>", parse_mode='html')
-            await message.answer("Xo'sh <i>davom etamizmi 😍?</i>",'html', reply_markup=Shashlik)
-            idd = message.from_user.id
-            with open(file=f'E:/NG/Mirzobek_py/Botlar/Malumotlar/{idd}.txt', mode='a') as fayl:
-                fayl.write(f"{od} - {str(price[od])} x {n} = {str(nn)}\n")
-            await anketa.product.set()
-        elif cat == 'Baliq 🐠':
-            await message.answer(f"{od} <i>dan {n} ta, savatchaga🛒 qo'shildi</i>", parse_mode='html')
-            await message.answer("Xo'sh <i>davom etamizmi 😍?</i>",'html', reply_markup=balq)
-            idd = message.from_user.id
-            with open(file=f'E:/NG/Mirzobek_py/Botlar/Malumotlar/{idd}.txt', mode='a') as fayl:
-                fayl.write(f"{od} - {str(price[od])} x {n} = {str(nn)}\n")
-            await anketa.product.set()
-        elif cat == "Холодные закуски":
-            await message.answer(f"{od} <i>dan {n} ta, savatchaga🛒 qo'shildi</i>", parse_mode='html')
-            await message.answer("Xo'sh <i>davom etamizmi 😍?</i>",'html', reply_markup=zaquska)
-            idd = message.from_user.id
-            with open(file=f'E:/NG/Mirzobek_py/Botlar/Malumotlar/{idd}.txt', mode='a') as fayl:
-                fayl.write(f"{od} - {str(price[od])} x {n} = {str(nn)}\n")
-            await anketa.product.set()
-        elif cat == "Salatlar":
-            await message.answer(f"{od} <i>dan {n} ta, Savatchaga🛒 qo'shildi</i>", parse_mode='html')
-            await message.answer("Xo'sh <i>davom etamizmi 😍?</i>",'html', reply_markup=salat)
-            idd = message.from_user.id
-            with open(file=f'E:/NG/Mirzobek_py/Botlar/Malumotlar/{idd}.txt', mode='a') as fayl:
-                fayl.write(f"{od} - {str(price[od])} x {n} = {str(nn)}\n")
-            await anketa.product.set()
-        elif cat == "Ichimliklar 🥤":
-            await message.answer(f"{od} <i>dan {n} ta, Savatchaga🛒 qo'shildi</i>", parse_mode='html')
-            await message.answer("Xo'sh <i>davom etamizmi 😍?</i>",'html', reply_markup=water)
-            idd = message.from_user.id
-            with open(file=f'E:/NG/Mirzobek_py/Botlar/Malumotlar/{idd}.txt', mode='a') as fayl:
-                fayl.write(f"{od} - {str(price[od])} x {n} = {str(nn)}\n")
-            await anketa.product.set()
-        elif cat == "Sho'rva":
-            await message.answer(f"{od} <i>dan {n} ta, Savatchaga🛒 qo'shildi</i>", parse_mode='html')
-            await message.answer("Xo'sh <i>davom etamizmi 😍?</i>",'html', reply_markup=shorva)
-            idd = message.from_user.id
-            with open(file=f'E:/NG/Mirzobek_py/Botlar/Malumotlar/{idd}.txt', mode='a') as fayl:
-                fayl.write(f"{od} - {str(price[od])} x {n} = {str(nn)}\n")
-            await anketa.product.set()
-    else:
-        await message.answer("Faqat son kiriting!")
-        await anketa.amout.set()
+from aiogram import types
+from aiogram.types import ReplyKeyboardMarkup
+
+from handlers.users.tel_price import get_price
+from keyboards.default.buttons import menuAll
+from loader import dp, db
+
+
+@dp.message_handler(text='Корзинка')
+async def korzina(message: types.Message):
+    try:
+        markup = ReplyKeyboardMarkup(resize_keyboard=True)
+        markup.add("Заказать 🚚")
+        products = db.get_products(tg_id=message.from_user.id)
+        total = 0
+        msg = "Ваши заказы\n\n"
+        for product in products:
+            markup.add(f"❌ {product[1]} ❌")
+            price = get_price(product[1], product[2])
+            total += price
+            msg += f"{product[1]} x {product[2]} = {price} $\n"
+        msg += f"\nОбщая сумма: {total} $"
+        markup.row("Назад", "Очистить 🗑")
+        await message.answer(msg, reply_markup=markup)
+    except:
+        await message.answer("Ваша корзинка еще пуста! Может быть это исправим?")
+
+
+@dp.message_handler(text_contains="❌")
+async def delete_product(message: types.Message):
+    product = message.text
+    product = product.replace("❌", "")
+    db.delete_product(tg_id=message.from_user.id, Name=product.strip())
+    await message.answer(f"{product.strip()} Ваша корзинка удалена!", reply_markup=menuAll)
+
+
+@dp.message_handler(text="Очистить 🗑")
+async def clearcart(message: types.Message):
+    id = message.from_user.id
+    db.clear_cart(tg_id=id)
+    await message.answer("Ваша корзинка очищена!", reply_markup=menuAll)
+
+
+@dp.message_handler(text="Назад")
+async def back(message: types.Message):
+    await message.answer("Вы нажали назад", reply_markup=menuAll)

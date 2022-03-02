@@ -2,9 +2,10 @@ from aiogram import types
 from aiogram.dispatcher import FSMContext
 
 from keyboards.default.buttons import menuAll, tel
+from keyboards.default.forcart import add_product, count1
 from keyboards.default.pixel import pixel4, pixel5, pixel6, pixelModel, modelListPixel, pixelmod, sheets_2
 from keyboards.inline.inn import donate,donate_version
-from loader import dp
+from loader import dp, db
 from states.state import Phone, Pixel
 
 
@@ -39,7 +40,11 @@ async def key(message: types.Message):
 
 
 @dp.message_handler(text=modelListPixel, state=Pixel.subproduct)
-async def model_answer(message: types.Message):
+async def model_answer(message: types.Message,state:FSMContext):
+    namex = message.text
+    await state.update_data(
+        {"name": namex}
+    )
     for i in modelListPixel:
         if message.text == i:
             n = modelListPixel.index(i)
@@ -100,9 +105,44 @@ async def model_answer(message: types.Message):
                                      f'•GPS: {gps.value}\n'
                                      f'•NFC: {nfc.value}\n'
                                      f'•USB: {usb.value}\n'
-                                     f'•Bluetooth: {bluet.value}\n',reply_markup=donate)
+                                     f'•Bluetooth: {bluet.value}\n', reply_markup=add_product)
+                Price = price.value
+                await state.update_data(
+                    {"price":Price}
+                )
+                await Pixel.subproduct.set()
+
+
+@dp.message_handler(text="Добавить в корзинку!", state=Pixel.subproduct)
+async def addtocart(message: types.Message):
+    await message.answer("Сколько смартфонов хотите купить?", reply_markup=count1)
     await Pixel.subproduct.set()
 
+def is_number(s):
+    try:
+        float(s)
+        return True
+    except ValueError:
+        return False
+
+@dp.message_handler(state=Pixel.subproduct)
+async def add1(message: types.Message, state: FSMContext):
+    n = message.text
+    if is_number(n) == True:
+        dataall = await state.get_data()
+        NAME = dataall.get("name")
+        price = dataall.get("price")
+        idname = message.from_user.id
+        product = db.check_product(tg_id = message.from_user.id,Name=NAME)
+        if product:
+            db.update_product(tg_id=idname, Name=NAME, quantity=int(product[2]) + int(n))
+        else:
+            db.add_product(tg_id=idname, Name=NAME, quantity=n)
+        await message.answer("Ваш заказ добавлен в корзинку!\n"
+                             f"Ваш ID {idname}\n"
+                             f"Название продукта {NAME}\n"
+                             f"Кол-во: {n}, Цена за штуку: {price}",reply_markup=pixelModel)
+    await Pixel.product.set()
 
 @dp.message_handler(text="Назад🔙", state=Phone.category)
 async def back1(message: types.Message, state: FSMContext):

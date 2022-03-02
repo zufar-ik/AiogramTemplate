@@ -5,8 +5,9 @@ from keyboards.default.apple import Apple_model, iphone, Apple_6, Apple_8, Apple
     Apple_13, sheets_3, modelList_apple, Apple_se
 from keyboards.default.buttons import menuAll
 from keyboards.default.buttons import tel
+from keyboards.default.forcart import count1, add_product
 from keyboards.inline.inn import donate, donate_version
-from loader import dp
+from loader import dp, db
 from states.state import Phone, iPhone
 
 
@@ -71,7 +72,12 @@ async def key(message: types.Message):
 
 
 @dp.message_handler(text=modelList_apple, state=iPhone.subproduct)
-async def model_answer(message: types.Message):
+async def model_answer(message: types.Message,state:FSMContext):
+    await message.answer(message.text)
+    namex = message.text
+    await state.update_data(
+        {"name": namex}
+    )
     for i in modelList_apple:
         if message.text == i:
             n = modelList_apple.index(i)
@@ -132,8 +138,44 @@ async def model_answer(message: types.Message):
                                      f'•GPS: {gps.value}\n'
                                      f'•NFC: {nfc.value}\n'
                                      f'•USB: {usb.value}\n'
-                                     f'•Bluetooth: {bluet.value}\n', reply_markup=donate)
+                                     f'•Bluetooth: {bluet.value}\n', reply_markup=add_product)
+                Price = price.value
+                await state.update_data(
+                    {"price":Price}
+                )
                 await iPhone.subproduct.set()
+
+
+@dp.message_handler(text="Добавить в корзинку!", state=iPhone.subproduct)
+async def addtocart(message: types.Message):
+    await message.answer("Сколько смартфонов хотите купить?", reply_markup=count1)
+    await iPhone.subproduct.set()
+
+def is_number(s):
+    try:
+        float(s)
+        return True
+    except ValueError:
+        return False
+
+@dp.message_handler(state=iPhone.subproduct)
+async def add1(message: types.Message, state: FSMContext):
+    n = message.text
+    if is_number(n) == True:
+        dataall = await state.get_data()
+        NAME = dataall.get("name")
+        price = dataall.get("price")
+        idname = message.from_user.id
+        product = db.check_product(tg_id = message.from_user.id,Name=NAME)
+        if product:
+            db.update_product(tg_id=idname, Name=NAME, quantity=int(product[2]) + int(n))
+        else:
+            db.add_product(tg_id=idname, Name=NAME, quantity=n)
+        await message.answer("Ваш заказ добавлен в корзинку!\n"
+                             f"Ваш ID {idname}\n"
+                             f"Название продукта {NAME}\n"
+                             f"Кол-во: {n}, Цена за штуку: {price}",reply_markup=Apple_model)
+    await iPhone.product.set()
 
 
 @dp.callback_query_handler(text="donate", state=iPhone.subproduct)
