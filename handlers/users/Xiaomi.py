@@ -24,8 +24,9 @@ async def all_brand(message: types.Message):
 
 @dp.message_handler(text="Связаться с администратором⁉️")
 async def all_brand(message: types.Message):
-    await message.answer("Задайте вопрос!",reply_markup=ReplyKeyboardRemove())
+    await message.answer("Задайте вопрос!", reply_markup=ReplyKeyboardRemove())
     await Question.questionad.set()
+
 
 @dp.message_handler(state=Question.questionad)
 async def get_price(message: types.Message, state: FSMContext):
@@ -37,10 +38,13 @@ async def get_price(message: types.Message, state: FSMContext):
     vopros = data.get("vopros")
     username = message.from_user.username
     iduser = message.from_user.id
-    await bot.send_message(chat_id=1297546327,text=f"Вопрос: {vopros}\nНикнейм: @{username}\nID Пользователя: {iduser}")
+    await bot.send_message(chat_id=1297546327,
+                           text=f"Вопрос: {vopros}\nНикнейм: @{username}\nID Пользователя: {iduser}")
     await message.answer("Ваш вопрос отправлен!\n"
-                         "Спасибо за помощь по улучшению нашего бота!",reply_markup=menuAll)
+                         "Спасибо за помощь по улучшению нашего бота!", reply_markup=menuAll)
     await state.finish()
+
+
 @dp.message_handler(text="Назад🔙", state=Phone.category)
 async def back(message: types.Message, state: FSMContext):
     await message.answer("Вы нажали назад", reply_markup=menuAll)

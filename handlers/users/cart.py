@@ -6,7 +6,7 @@ from keyboards.default.buttons import menuAll
 from loader import dp, db
 
 
-@dp.message_handler(text='Корзинка')
+@dp.message_handler(text='Корзинка 🛒')
 async def korzina(message: types.Message):
     try:
         markup = ReplyKeyboardMarkup(resize_keyboard=True)
