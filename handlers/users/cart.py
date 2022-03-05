@@ -2,7 +2,7 @@ from aiogram import types
 from aiogram.types import ReplyKeyboardMarkup
 
 from handlers.users.tel_price import get_price
-from keyboards.default.buttons import menuAll
+from keyboards.default.buttons import menuAll, tel
 from loader import dp, db
 
 
@@ -24,7 +24,7 @@ async def korzina(message: types.Message):
         markup.row("Назад", "Очистить 🗑")
         await message.answer(msg, reply_markup=markup)
     else:
-        await message.answer("Ваша корзинка еще пуста! Может быть это исправим?")
+        await message.answer("Ваша корзинка еще пуста! Может быть это исправим?",reply_markup=tel)
 
 
 @dp.message_handler(text_contains="❌")
