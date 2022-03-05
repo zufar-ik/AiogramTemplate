@@ -8,7 +8,8 @@ from loader import dp, db
 
 @dp.message_handler(text='Корзинка 🛒')
 async def korzina(message: types.Message):
-    try:
+    products1 = db.get_products(tg_id=message.from_user.id)
+    if len(products1) != 0:
         markup = ReplyKeyboardMarkup(resize_keyboard=True)
         markup.add("Заказать 🚚")
         products = db.get_products(tg_id=message.from_user.id)
@@ -22,7 +23,7 @@ async def korzina(message: types.Message):
         msg += f"\nОбщая сумма: {total} $"
         markup.row("Назад", "Очистить 🗑")
         await message.answer(msg, reply_markup=markup)
-    except:
+    else:
         await message.answer("Ваша корзинка еще пуста! Может быть это исправим?")
 
 

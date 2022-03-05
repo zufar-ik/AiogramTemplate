@@ -21,6 +21,7 @@ async def get_all_users(message: types.Message):
         "Telegram ID": id,
         "Name": name
     }
+    pd.options.display.max_rows = 10000
     df = pd.DataFrame(data)
     # print(df)
     await message.answer(df)
