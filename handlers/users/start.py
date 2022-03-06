@@ -16,7 +16,9 @@ async def bot_start(message: types.Message):
     try:
         db.add_user(id=message.from_user.id,
                     name=name)
-        await message.answer(f"Добро пожаловать! {name}", reply_markup=menuAll)
+        await message.answer(f"Добро пожаловать! {name}\n"
+                             f"🤖 Я бот который поможет тебе найти характеристики смартфонов\n"
+                             f"🤝 Заказать похожего или совсем иного бота? Свяжитесь с разработчиком <a href='https://t.me/zufar_ik'>Bekzod Raximov</a>", reply_markup=menuAll)
         # Оповещаем админа
         count = db.count_users()[0]
         msg = f"{message.from_user.full_name} добавлен в базу пользователей.\nВ базе есть {count} людей."
@@ -24,4 +26,8 @@ async def bot_start(message: types.Message):
 
     except sqlite3.IntegrityError as err:
         await bot.send_message(chat_id=ADMINS[0], text=f"{name} в базе имелся раньше")
-        await message.answer(f"Добро пожаловать! {name}, выберите марку смартфона", reply_markup=menuAll)
+        await message.answer(f"Добро пожаловать! {name}\n"
+                             f"🤖 Я бот который поможет тебе найти характеристики смартфонов\n"
+                             f"🤝 Заказать похожего или совсем иного бота? Свяжитесь с разработчиком <a href='https://t.me/zufar_ik'>Bekzod Raximov</a>",
+                             reply_markup=menuAll)
+
