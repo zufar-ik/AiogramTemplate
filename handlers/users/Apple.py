@@ -71,6 +71,12 @@ async def key(message: types.Message):
     await iPhone.subproduct.set()
 
 
+@dp.message_handler(text="Назад🔙", state=iPhone.subproduct)
+async def addtocart(message: types.Message):
+    await message.answer("Вы нажали назад", reply_markup=Apple_model)
+    await iPhone.product.set()
+
+
 @dp.message_handler(text=modelList_apple, state=iPhone.subproduct)
 async def model_answer(message: types.Message, state: FSMContext):
     await message.answer(message.text)
@@ -152,12 +158,6 @@ async def addtocart(message: types.Message):
     await iPhone.subproduct.set()
 
 
-@dp.message_handler(text="🔙Назад", state=iPhone.subproduct)
-async def addtocart(message: types.Message):
-    await message.answer("Вы нажали назад", reply_markup=Apple_model)
-    await iPhone.product.set()
-
-
 @dp.message_handler(text="Отмена", state=iPhone.subproduct)
 async def get_donate(message: types.Message):
     await message.answer('Вы нажали отмена', reply_markup=Apple_model)
@@ -202,12 +202,6 @@ async def get_donate(call: types.CallbackQuery):
 async def back1(message: types.Message):
     await message.answer("Вы нажали назад", reply_markup=tel)
     await Phone.category.set()
-
-
-@dp.message_handler(text="Назад🔙", state=iPhone.subproduct)
-async def back1(message: types.Message):
-    await message.answer("Вы нажали назад", reply_markup=Apple_model)
-    await iPhone.product.set()
 
 
 @dp.message_handler(text="Назад🔙", state=iPhone.product)

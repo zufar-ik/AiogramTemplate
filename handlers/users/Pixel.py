@@ -4,7 +4,7 @@ from aiogram.dispatcher import FSMContext
 from keyboards.default.buttons import menuAll, tel
 from keyboards.default.forcart import add_product, count1
 from keyboards.default.pixel import pixel4, pixel5, pixel6, pixelModel, modelListPixel, pixelmod, sheets_2
-from keyboards.inline.inn import donate,donate_version
+from keyboards.inline.inn import donate_version
 from loader import dp, db
 from states.state import Phone, Pixel
 
@@ -39,8 +39,31 @@ async def key(message: types.Message):
     await Pixel.subproduct.set()
 
 
+@dp.message_handler(text="Назад🔙", state=Pixel.subcategory)
+async def back1(message: types.Message):
+    await message.answer("Вы нажали назад", reply_markup=tel)
+    await Phone.category.set()
+
+
+@dp.message_handler(text="Назад🔙", state=Pixel.subproduct)
+async def back1(message: types.Message):
+    await message.answer("Вы нажали назад", reply_markup=pixelModel)
+    await Pixel.product.set()
+
+
+@dp.message_handler(text="Назад🔙", state=Pixel.product)
+async def back1(message: types.Message):
+    await message.answer("Вы нажали назад", reply_markup=pixelmod)
+    await Pixel.subcategory.set()
+
+@dp.message_handler(text="Главное меню🏠", state=Pixel)
+async def main_menu(message: types.Message, state: FSMContext):
+    await message.answer("Вы нажали Главное меню", reply_markup=menuAll)
+    await state.finish()
+
+
 @dp.message_handler(text=modelListPixel, state=Pixel.subproduct)
-async def model_answer(message: types.Message,state:FSMContext):
+async def model_answer(message: types.Message, state: FSMContext):
     namex = message.text
     await state.update_data(
         {"name": namex}
@@ -50,9 +73,9 @@ async def model_answer(message: types.Message,state:FSMContext):
             n = modelListPixel.index(i)
             n += 1
             answer_sheet = (sheets_2[f"B{n}:AV{n}"])
-            for photo, date, size, weight, frame, color, battery, price, tech, touch, colour, sized, square, hw, sc,\
-                sr, PPI, sp, other, camback, backab, backf, backrec, frontcam, frontab, frontf, frontrec, OS, chip,\
-                cpu, gpu, sdcard, RAM, Antutu9, Antutu8, Geek5s, Geek5m, sim, net, speed, gprs, edge, wifi, gps, nfc,\
+            for photo, date, size, weight, frame, color, battery, price, tech, touch, colour, sized, square, hw, sc, \
+                sr, PPI, sp, other, camback, backab, backf, backrec, frontcam, frontab, frontf, frontrec, OS, chip, \
+                cpu, gpu, sdcard, RAM, Antutu9, Antutu8, Geek5s, Geek5m, sim, net, speed, gprs, edge, wifi, gps, nfc, \
                 usb, bluet in answer_sheet:
                 await message.answer_photo(photo=photo.value)
                 await message.answer(f'<b>•Общие Характеристики</b>•\n\n'
@@ -108,7 +131,7 @@ async def model_answer(message: types.Message,state:FSMContext):
                                      f'•Bluetooth: {bluet.value}\n', reply_markup=add_product)
                 Price = price.value
                 await state.update_data(
-                    {"price":Price}
+                    {"price": Price}
                 )
                 await Pixel.subproduct.set()
 
@@ -118,10 +141,12 @@ async def addtocart(message: types.Message):
     await message.answer("Сколько смартфонов хотите купить?", reply_markup=count1)
     await Pixel.subproduct.set()
 
+
 @dp.message_handler(text="Отмена", state=Pixel.subproduct)
 async def get_donate(message: types.Message):
     await message.answer('Вы нажали отмена', reply_markup=pixelModel)
     await Pixel.product.set()
+
 
 def is_number(s):
     try:
@@ -129,6 +154,7 @@ def is_number(s):
         return True
     except ValueError:
         return False
+
 
 @dp.message_handler(state=Pixel.subproduct)
 async def add1(message: types.Message, state: FSMContext):
@@ -138,7 +164,7 @@ async def add1(message: types.Message, state: FSMContext):
         NAME = dataall.get("name")
         price = dataall.get("price")
         idname = message.from_user.id
-        product = db.check_product(tg_id = message.from_user.id,Name=NAME)
+        product = db.check_product(tg_id=message.from_user.id, Name=NAME)
         if product:
             db.update_product(tg_id=idname, Name=NAME, quantity=int(product[2]) + int(n))
         else:
@@ -146,39 +172,14 @@ async def add1(message: types.Message, state: FSMContext):
         await message.answer("Ваш заказ добавлен в корзинку!\n"
                              f"Ваш ID {idname}\n"
                              f"Название продукта {NAME}\n"
-                             f"Кол-во: {n}, Цена за штуку: {price}",reply_markup=pixelModel)
+                             f"Кол-во: {n}, Цена за штуку: {price}", reply_markup=pixelModel)
     await Pixel.product.set()
 
 
-@dp.message_handler(text="Назад🔙", state=Phone.category)
-async def back1(message: types.Message, state: FSMContext):
-    await message.answer("Вы нажали назад", reply_markup=menuAll)
-    await state.finish()
-
-
-@dp.message_handler(text="Назад🔙", state=Pixel.subcategory)
-async def back1(message: types.Message):
-    await message.answer("Вы нажали назад", reply_markup=tel)
-    await Phone.category.set()
-
-
-@dp.message_handler(text="Назад🔙", state=Pixel.subproduct)
-async def back1(message: types.Message):
-    await message.answer("Вы нажали назад", reply_markup=pixelModel)
-    await Pixel.product.set()
-
-
-@dp.message_handler(text="Назад🔙", state=Pixel.product)
-async def back1(message: types.Message):
-    await message.answer("Вы нажали назад", reply_markup=pixelmod)
-    await Pixel.subcategory.set()
-
-@dp.callback_query_handler(text="donate",state=Pixel.subproduct)
+@dp.callback_query_handler(text="donate", state=Pixel.subproduct)
 async def get_donate(call: types.CallbackQuery):
     await call.message.answer('Выберите удобный способ поддержки!', reply_markup=donate_version)
     await Pixel.subproduct.set()
 
-@dp.message_handler(text='Главное меню🏠', state=Pixel)
-async def main_menu(message: types.Message, state: FSMContext):
-    await message.answer("Вы нажали Главное меню", reply_markup=menuAll)
-    await state.finish()
+
+

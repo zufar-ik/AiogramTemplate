@@ -44,3 +44,10 @@ class Question(StatesGroup):
 
 class Reklama(StatesGroup):
     reklama = State()
+
+class Zakaz(StatesGroup):
+    name = State()
+    Adress = State()
+    tel = State()
+    tel2 = State()
+    confirmP =State()

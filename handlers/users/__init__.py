@@ -7,3 +7,4 @@ from . import Apple
 from . import Samsung
 from . import cart
 from . import tel_price
+from . import send_tel
