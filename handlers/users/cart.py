@@ -4,6 +4,7 @@ from aiogram.types import ReplyKeyboardMarkup
 from handlers.users.tel_price import get_price
 from keyboards.default.buttons import menuAll, tel
 from loader import dp, db
+from states.state import Phone
 
 
 @dp.message_handler(text='Корзинка 🛒')
@@ -25,6 +26,7 @@ async def korzina(message: types.Message):
         await message.answer(msg, reply_markup=markup)
     else:
         await message.answer("Ваша корзинка еще пуста! Может быть это исправим?",reply_markup=tel)
+        await Phone.category.set()
 
 
 @dp.message_handler(text_contains="❌")
