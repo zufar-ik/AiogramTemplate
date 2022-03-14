@@ -44,3 +44,10 @@ contactnum = ReplyKeyboardMarkup(
     resize_keyboard=True,
     one_time_keyboard=True
 )
+
+admin = InlineKeyboardMarkup(
+    inline_keyboard=[
+        [InlineKeyboardButton(text="Отправить",callback_data="send_to_channel")],
+        [InlineKeyboardButton(text="Отмена",callback_data="cancel")]
+    ]
+)

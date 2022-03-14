@@ -4,9 +4,10 @@ from aiogram import types
 from aiogram.dispatcher import FSMContext
 from aiogram.types import ReplyKeyboardMarkup, ReplyKeyboardRemove
 
+from data.config import CHANNELS
 from handlers.users.tel_price import get_price
 from keyboards.default.buttons import menuAll, tel
-from keyboards.inline.inn import user, contactnum
+from keyboards.inline.inn import user, contactnum, admin
 from loader import dp, db
 from states.state import Phone, Zakaz
 
@@ -177,7 +178,7 @@ async def sendadmin(call: types.CallbackQuery, state: FSMContext):
                                      f"Адрес: {adress1}\n"
                                      f"Основной номер: +{telnum1}\n"
                                      f"Username: @{username}\n"
-                                     f"Второстепенный: +{telnum2}", reply_markup=user
+                                     f"Второстепенный: +{telnum2}", reply_markup=admin
                                 )
     await call.message.answer("Ваша заказ не будет отправлен!\n"
                               "Этот раздел только для демонстрации наших сил😊", reply_markup=menuAll)
@@ -186,6 +187,10 @@ async def sendadmin(call: types.CallbackQuery, state: FSMContext):
 
     await state.finish()
 
+@dp.callback_query_handler(text="send_to_channel")
+async def confirm_post(call:types.CallbackQuery):
+    message = await call.message.edit_reply_markup()
+    await message.send_copy(chat_id=CHANNELS[0])
 
 @dp.message_handler(text="Нет!")
 async def no(message: types.Message):
