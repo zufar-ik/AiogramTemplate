@@ -9,7 +9,7 @@ from loader import db, bot
 from loader import dp
 
 
-@dp.message_handler(CommandStart())
+@dp.message_handler(CommandStart(),state="*")
 async def bot_start(message: types.Message):
     name = message.from_user.full_name
     # Добавляем пользователей в базу
