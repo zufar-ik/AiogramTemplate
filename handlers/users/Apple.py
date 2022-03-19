@@ -157,10 +157,6 @@ async def addtocart(message: types.Message):
     await message.answer("Сколько смартфонов хотите купить?", reply_markup=count1)
     await iPhone.subproduct.set()
 
-@dp.message_handler(text="🔙Назад", state=iPhone.subproduct)
-async def addtocart(message: types.Message):
-    await message.answer("Вы нажали назад", reply_markup=Apple_model)
-    await iPhone.product.set()
 
 @dp.message_handler(text="Отмена", state=iPhone.subproduct)
 async def get_donate(message: types.Message):

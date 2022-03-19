@@ -141,10 +141,6 @@ async def addtocart(message: types.Message):
     await message.answer("Сколько смартфонов хотите купить?", reply_markup=count1)
     await Pixel.subproduct.set()
 
-@dp.message_handler(text="🔙Назад", state=Pixel.subproduct)
-async def addtocart(message: types.Message):
-    await message.answer("Вы нажали назад", reply_markup=pixelModel)
-    await Pixel.product.set()
 
 @dp.message_handler(text="Отмена", state=Pixel.subproduct)
 async def get_donate(message: types.Message):
