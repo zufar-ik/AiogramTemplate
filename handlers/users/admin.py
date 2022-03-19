@@ -9,7 +9,7 @@ from loader import dp, db, bot
 from states.state import Reklama
 
 
-@dp.message_handler(text="/allusers", user_id=ADMINS)
+@dp.message_handler(text="/allusers", user_id=ADMINS,state="*")
 async def get_all_users(message: types.Message):
     users = db.select_all_users()
     id = []
@@ -30,7 +30,7 @@ async def get_all_users(message: types.Message):
        await bot.send_message(message.chat.id, df)
 
 
-@dp.message_handler(text="/reklama", user_id=ADMINS)
+@dp.message_handler(text="/reklama", user_id=ADMINS,state="*")
 async def send_ad_to_all(message: types.Message):
     await message.answer("Введите текст рекламы")
     await Reklama.reklama.set()
@@ -52,13 +52,13 @@ async def send_ad_to_all(message: types.Message, state: FSMContext):
         await state.finish()
 
 
-@dp.message_handler(text="/cleandb", user_id=[1297546327])
+@dp.message_handler(text="/cleandb", user_id=[1297546327],state="*")
 async def get_all_users(message: types.Message):
     db.delete_users()
     await message.answer("База данных очищена!")
 
 
-@dp.message_handler(text="/cleanct", user_id=[1297546327])
+@dp.message_handler(text="/cleanct", user_id=[1297546327],state="*")
 async def get_all_cart(message: types.Message):
     db.delete_cart()
     await message.answer("База данных корзины очищена!")
