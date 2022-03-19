@@ -9,7 +9,7 @@ from loader import dp, db, bot
 from states.state import Reklama
 
 
-@dp.message_handler(text="/allusers", user_id=ADMINS,state="*")
+@dp.message_handler(text="/allusers", user_id=ADMINS)
 async def get_all_users(message: types.Message):
     users = db.select_all_users()
     id = []
@@ -25,9 +25,9 @@ async def get_all_users(message: types.Message):
     df = pd.DataFrame(data)
     if len(df) > 50:
         for x in range(0, len(df), 50):
-            await bot.send_message(message.chat.id, df[x:x + 50])
+            await bot.send_message(message.chat.id, df[x:x + 50],parse_mode="HTML")
     else:
-       await bot.send_message(message.chat.id, df)
+       await bot.send_message(message.chat.id, df,parse_mode="HTML")
 
 
 @dp.message_handler(text="/reklama", user_id=ADMINS,state="*")
@@ -52,13 +52,13 @@ async def send_ad_to_all(message: types.Message, state: FSMContext):
         await state.finish()
 
 
-@dp.message_handler(text="/cleandb", user_id=[1297546327],state="*")
+@dp.message_handler(text="/cleandb", user_id=[1297546327])
 async def get_all_users(message: types.Message):
     db.delete_users()
     await message.answer("База данных очищена!")
 
 
-@dp.message_handler(text="/cleanct", user_id=[1297546327],state="*")
+@dp.message_handler(text="/cleanct", user_id=[1297546327])
 async def get_all_cart(message: types.Message):
     db.delete_cart()
     await message.answer("База данных корзины очищена!")
