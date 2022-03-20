@@ -180,7 +180,7 @@ async def sendadmin(call: types.CallbackQuery, state: FSMContext):
                                      f"Username: @{username}\n"
                                      f"Второстепенный: +{telnum2}", reply_markup=admin
                                 )
-    await call.message.answer("Ваша заказ не будет отправлен!\n"
+    await call.message.answer("Ваш заказ не будет отправлен!\n"
                               "Этот раздел только для демонстрации наших сил😊", reply_markup=menuAll)
 
     db.clear_cart(tg_id=id1)
